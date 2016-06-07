@@ -75,7 +75,10 @@
                    (flycheck-error-filename err))))
    errors)
  :modes (elixir-mode)
- :predicate (lambda () (and (flycheck-mix-project-root))))
+ :predicate (lambda ()
+              (and
+               (flycheck-mix-project-root)
+               (flycheck-buffer-saved-p))))
 
 (defun flycheck-mix-project-root ()
   "Return directory where =mix.exs= is located."
@@ -92,7 +95,6 @@
   "Setup Flycheck for Elixir."
   ;; it doesn't make sense to check buffer on idle change
   ;; only saved files will be checked by mix
-  (setq flycheck-check-syntax-automatically '(mode-enabled save))
   (add-to-list 'flycheck-checkers 'elixir-mix))
 
 (provide 'flycheck-mix)
